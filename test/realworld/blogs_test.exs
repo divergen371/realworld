@@ -57,6 +57,27 @@ defmodule Realworld.BlogsTest do
       article = article_fixture()
       assert %Ecto.Changeset{} = Blogs.change_article(article)
     end
+
+    test "list_articles_by_tag/1" do
+      {:ok, %{article: a1}} =
+        Blogs.insert_article_with_tags(%{
+          title: "t",
+          body: "b",
+          tags_string: "Elixir, Phoenix, Nerves, Nx"
+        })
+
+      {:ok, %{article: a2}} =
+        Blogs.insert_article_with_tags(%{
+          title: "t",
+          body: "b",
+          tags_string: "Elixir"
+        })
+
+      assert Blogs.list_articles_by_tag("Elixir")
+             |> Enum.map(& &1.id)
+             |> MapSet.new()
+             |> MapSet.equal?(MapSet.new([a1.id, a2.id]))
+    end
   end
 
   describe "comments" do
