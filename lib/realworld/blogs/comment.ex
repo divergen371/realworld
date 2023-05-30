@@ -1,4 +1,7 @@
 defmodule Realworld.Blogs.Comment do
+  @moduledoc """
+  Comment Schema
+  """
   use Ecto.Schema
   import Ecto.Changeset
   alias Realworld.Blogs.Article
