@@ -1,5 +1,8 @@
 defmodule Realworld.Blogs.Article do
   alias Realworld.Blogs.Comment
+  alias Realworld.Blogs.ArticleTag
+  alias Realworld.Blogs.Tag
+
   @moduledoc """
   Article Schema
   """
@@ -11,13 +14,22 @@ defmodule Realworld.Blogs.Article do
     field :title, :string
 
     has_many :comments, Comment, on_delete: :delete_all
+
+    many_to_many :tags, Tag,
+      join_through: ArticleTag,
+      on_replace: :delete,
+      on_delete: :delete_all
+
     timestamps()
   end
 
+
+
   @doc false
-  def changeset(article, attrs) do
+  def changeset(article, attrs, tags \\ []) do
     article
     |> cast(attrs, [:title, :body])
     |> validate_required([:title, :body])
+    |> put_assoc(:tags, tags)
   end
 end
