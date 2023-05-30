@@ -28,7 +28,7 @@ defmodule Realworld.Blogs.Article do
   @doc false
   def changeset(article, attrs, tags \\ []) do
     article
-    |> cast(attrs, [:title, :body])
+    |> cast(attrs, [:title, :body, :author_id])
     |> validate_required([:title, :body, :author_id])
     |> put_assoc(:tags, tags)
   end
