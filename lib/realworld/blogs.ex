@@ -22,6 +22,11 @@ defmodule Realworld.Blogs do
     Repo.all(Article) |> Repo.preload(:tags)
   end
 
+  def list_articles_by_tag(tag_name) do
+    query = from a in Article, join: t in assoc(a, :tags), on: t.tag == ^tag_name
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single article.
 
