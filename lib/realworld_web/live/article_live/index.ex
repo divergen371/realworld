@@ -32,7 +32,7 @@ defmodule RealworldWeb.ArticleLive.Index do
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Article")
-    |> assign(:article, %Article{})
+    |> assign(:article, %Article{author_id: socket.assigns.current_user.id})
   end
 
   defp apply_action(socket, :index, _params) do
